@@ -1,0 +1,19 @@
+#
+#  as root
+#
+# add to /etc/nut/nut.conf
+#     MODE=standalone
+#
+# add to /etc/nut.ups.conf
+#maxretry = 3
+#maxretry = 3
+[AEG]
+#	driver = blazer_usb
+#	port = /dev/usb/hiddev0
+#	desc = "Something"
+#
+#
+#
+#
+sudo /lib/nut/blazer_usb -a AEG
+upsd

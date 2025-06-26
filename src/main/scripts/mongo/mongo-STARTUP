@@ -1,0 +1,2 @@
+[root@rosi-control-3 ~]# sudo -u mongodb /usr/bin/mongod --dbpath /data/mongo --repair^C
+[root@rosi-control-3 ~]# sudo -u mongodb /usr/bin/mongod -f /etc/mongodb.conf 

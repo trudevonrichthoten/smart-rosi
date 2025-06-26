@@ -1,0 +1,11 @@
+db.logger201701.find().forEach( printjson )
+db.logger201701.find().forEach( function(x){ print(x.timestamp,x["bathroom/temperature"],x["livingroom/temperature"], x["livingroom/desired"] ) ; } )
+db.logger201701.find( { timestamp : { $gte : ISODate("2017-01-08T09:46:19.288Z")  , $lt : ISODate("2017-01-08T09:49:19.474Z")  }} )
+
+db.logger201702.find( { timestamp : { $gte : ISODate("2017-02-01T00:00:00.000Z" ) , $lt : ISODate("2017-02-02T00:00:00.000Z" ) }} ).forEach(  function(x){ print(x.timestamp,x["bathroom/temperature"],x["livingroom/temperature"], x["livingroom/desired"] ) ; } 
+
+
+db.logger201702.find( { timestamp : { $gte : ISODate("2017-03-19T00:00:00") , $lt : ISODate("2017-03-23T23:00:00" ) }} ).forEach( function(x){ print( x["timestamp"],x["livingroom/temperature"],x["bathroom/temperature"] ); } )
+
+
+db.logger20181212.find( { timestamp : { $gte : ISODate("2018-12-23T04:00:00") , $lt : ISODate("2018-12-23T08:00:00" ) }} ).forEach(  function(x){ print(x.timestamp,x["bathroom/temperature"],x["livingroom/temperature"]);})
