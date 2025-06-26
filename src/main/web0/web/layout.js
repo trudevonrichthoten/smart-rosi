@@ -1,0 +1,533 @@
+   
+   var diff = 6 ; 
+   
+   var __xcounter = 0 ;
+   
+   var office_width  = 455 ;
+   var office_height = 317 ;
+   var kitchen_width = 235 ;
+   var kitchen_height= office_height ;
+   
+   var bathroom_width  = 270 ;
+   var bathroom_height = 257 ;
+   var hallway_width   = 420 ;
+   var hallway_height  = bathroom_height ;
+   
+   var livingroom_width  = 400 ;
+   var livingroom_height = 486 ;
+   var diningroom_width  = 290 ;
+   var diningroom_height = livingroom_height ;
+   
+   var lamp1 = { name : "livingroom.light.01.state" , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp2 = { name : "livingroom.light.02.state" , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp3 = { name : "livingroom.light.03.state" , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp4 = { name : "bathroom.light.01.state"   , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp5 = { name : "bathroom.light.02.state"   , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp6 = { name : "kitchen.light.01.state"    , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp7 = { name : "kitchen.light.02.state"    , type : "dot" , background : getColorOf , width: 20 } ;
+   var lamp8 = { name : "hallway.light.01.state"    , type : "dot" , background : getColorOf , width: 20 } ;
+                 
+   var livingroom_window  = 
+        { name : "livingroom.window" , type : "square" , background : getColorOf ,
+          width: (livingroom_width*0.6) , height: 20 } ;
+                    
+   var office_window  = 
+        { name : "office.window" , type : "square" , background : getColorOf ,
+          width: (office_width*0.5) , height: 20 } ;
+                    
+   var hallway_door  = 
+        { name : "hallway.door" , type : "square" , background : getColorOf ,
+          width: 20   , height: (hallway_height*0.5) } ;
+                    
+   var livingroom_desired_temperature  = 
+        { name : "livingroom.heater.temperature.desired" , type : "text" , background : getColorOf ,
+          width: 20 , font: "Times New Roman"  , text : getTextOf } ;
+   var livingroom_temperature  = 
+        { name : "livingroom.heater.temperature.messured" , type : "text" , background : getColorOf ,
+          width: 20 , font: "Times New Roman"  , text : getTextOf } ;
+   var bathroom_desired_temperature  = 
+        { name : "bathroom.heater.temperature.desired" , type : "text" , background : getColorOf ,
+          width: 20 , font: "Times New Roman"  , text : getTextOf } ;
+   var bathroom_temperature  = 
+        { name : "bathroom.heater.temperature.messured" , type : "text" , background : getColorOf ,
+          width: 20 , font: "Times New Roman"  , text : getTextOf } ;
+                 
+   var thingsInHallway = [
+          { x : (hallway_width - 20) , 
+            y : (hallway_height*0.3) , 
+            value : hallway_door } ,
+          { px : 0.5  , py : 0.5 , value : lamp8 } ,   
+   ] ;
+          
+   var thingsInOffice = [
+          { x : (office_width*0.3)  , 
+            y : 0 , 
+            value : office_window } ,
+   ] ;
+          
+   var thingsInLivingroom = [
+          { x : (livingroom_width*0.2)  , 
+            y : (livingroom_height-20) , 
+            value : livingroom_window } ,
+            
+          { px : 0.2 , py : 0.2 , value : livingroom_desired_temperature },
+          { px : 0.2 , py : 0.5 , value : livingroom_temperature },
+          
+          { px : 0.1  , py : 0.33 , value : lamp1 } ,   
+          { px : 0.1  , py : 0.66 , value : lamp2 } ,   
+          { px : 0.9  , py : 0.74 , value : lamp3 } ,   
+   ] ;
+   
+   var thingsInBathroom = [          
+          { px : 0.2 , py : 0.2 , value : bathroom_desired_temperature },
+          { px : 0.2 , py : 0.5 , value : bathroom_temperature },
+          
+          { px : 0.3  , py : 0.85 , value : lamp4 } ,   
+          { px : 0.8  , py : 0.85 , value : lamp5 } ,   
+   ] ;
+   
+   var thingsInKitchen = [          
+          { px : 0.3  , py : 0.1 , value : lamp6 } ,   
+          { px : 0.5  , py : 0.1 , value : lamp7 } ,   
+   ] ;
+   
+   
+   var office  = { name : "office.move" , type : "square" , background : getColorOf ,  
+                  width: office_width  , height: office_height ,
+                  details : thingsInOffice } ;
+   
+   var kitchen  = { name : "kitchen.move" , type : "square" , background : getColorOf ,  
+                  width: kitchen_width  , height: kitchen_height ,
+                  details : thingsInKitchen } ;
+   
+   var bathroom = { name : "bathroom.move" , type : "square" , background : getColorOf ,  
+                  width: bathroom_width  , height: bathroom_height ,
+                  details : thingsInBathroom } ;
+   
+   var hallway = { name : "hallway.move" , type : "square" , background : getColorOf ,  
+                  width: hallway_width  , height: hallway_height ,
+                  details : thingsInHallway } ;
+   
+   var livingroom = { name : "livingroom.move" , type : "square" , background : getColorOf ,  
+                  width: livingroom_width  , height: livingroom_height ,
+                  details : thingsInLivingroom } ;
+                  
+   var diningroom = { name : "diningroom.move" , type : "square" , background : getColorOf ,  
+                  width: diningroom_width  , height: diningroom_height ,
+                  details : null } ;
+                  
+              
+   var home_layout = [
+       
+        { x : 0                     , y : 0                    , value : office   } ,
+        
+        { x : office.width + diff   , y : 0                    , value : kitchen  } ,
+        
+        { x : 0                     , y : office.height + diff , value : bathroom } ,
+        
+        { x : bathroom.width + diff , y : office.height + diff , value : hallway  } ,
+        
+        { x : 0 , y : office.height + diff + bathroom.height + diff  , value : livingroom } ,
+        
+        { x : livingroom.width + diff , y : office.height + diff + bathroom.height + diff , value : diningroom } 
+        
+   ];
+   
+   var appartmentWidth  = office.width  + diff + kitchen.width ;
+   var appartmentHeight = office.height + diff + bathroom.height + diff + livingroom.height
+   var home = { name : "appartment" , 
+                type : "square" , 
+                background : getColorOf ,
+                width      : appartmentWidth , 
+                height     : appartmentHeight , 
+                details    : home_layout 
+              } ;
+              
+   var IN_ROOT = [
+       
+        { x : 0 , y : 0 , value : home }   
+   ];
+    
+   var ROOT ;
+   var ctx ;
+   var value_map = {} ;
+
+    /*---------------------------------------------*/
+    function initVars() {
+    /*---------------------------------------------*/
+
+        outMessage = document.getElementById('outMessage');
+        outMessage.innerHTML = "Hallo Truedelchen (c)";
+
+        layoutCanvas = document.getElementById('roomlayout');
+        
+        ctx = layoutCanvas.getContext("2d");
+           
+        calculateScale() ;
+        drawVector(null,ROOT,0,0);
+       
+     }
+    /*----------------------------------------------------------------*/
+    function resizeBody(){
+    /*----------------------------------------------------------------*/
+      
+        calculateScale() ;
+        drawVector(null,ROOT,0,0);
+    }
+    /*---------------------------------------------*/
+     function clickUpdate() {
+    /*---------------------------------------------*/
+         
+         // drawVector(null,ROOT,0,0);
+         sendRequest();
+         
+         // setTimeout( clickUpdate , 2000 ) ;
+         //claculateScale();
+         
+         drawVector(null,ROOT,0,0);
+
+     }
+    /*---------------------------------------------*/
+     function drawUpdate() {
+    /*---------------------------------------------*/
+         outMessage.innerHTML = "Counter : "+__xcounter ;  __xcounter ++ ;
+
+         drawVector(null,ROOT,0,0);
+         
+         setTimeout( drawUpdate , 1000 ) ;
+
+     }
+    /*---------------------------------------------*/
+    function calculateScale() {
+    /*---------------------------------------------*/
+    
+        var scale = 1.0 ;
+
+        var viewWidth  = document.body.offsetWidth * 0.95  ;
+        var viewHeight = document.body.clientHeight * 0.95  ;
+
+        // layoutCanvas.height = viewHeight ;
+        // layoutCanvas.width  = viewWidth ;
+
+        if( ( ( viewWidth >  viewHeight ) && ( appartmentWidth > appartmentHeight ) ) ||
+            ( ( viewWidth <  viewHeight ) && ( appartmentWidth < appartmentHeight ) ) ){
+        
+           var height = appartmentHeight ;
+           var width  = appartmentWidth ;
+           
+           if( ( ( viewWidth / width ) * height ) > viewHeight ){
+              scale = viewHeight / height ; 
+           }else{
+              scale = viewWidth / width ; 
+           }
+           layoutCanvas.height  = height * scale ;
+           layoutCanvas.width   = width  * scale ;
+
+           ROOT = duplicateVector( IN_ROOT , scale , true ) ;
+           
+        }else{
+
+           var height = appartmentWidth ;
+           var width  = appartmentHeight ;
+           
+           if( ( ( viewWidth / width ) * height ) > viewHeight ){
+              scale = viewHeight / height ; 
+           }else{
+              scale = viewWidth / width ; 
+           }
+           layoutCanvas.height  = height * scale ;
+           layoutCanvas.width   = width  * scale ;
+
+           ROOT = duplicateVector( IN_ROOT , scale , false ) ;
+           
+        
+        }
+        
+     
+    }
+    /*----------------------------------------------------------------*/
+    function drawVector( parent , vector , current_x , current_y ) {
+    /*----------------------------------------------------------------*/
+    
+       var layoutLength = vector.length ;
+
+       for( var i = 0 ; i < layoutLength ; i++ ){
+          
+           var obj = vector[i] ;
+           
+           var single_object = obj.value ;
+
+           var x_position ;
+           var y_position ;
+           if( obj.px ){
+               x_position    = Math.round( parent.width  * obj.px ) + current_x ;
+               y_position    = Math.round( parent.height * obj.py ) + current_y ;
+           }else{
+               x_position    = obj.x + current_x ;
+               y_position    = obj.y + current_y ;
+           }
+
+           ctx.fillStyle = single_object.background(single_object.name) ;          
+          
+           if( single_object.type == "square" ){
+               
+              ctx.fillRect( x_position, 
+                            y_position , 
+                            single_object.width, 
+                            single_object.height 
+                          );
+              ctx.beginPath();
+              ctx.moveTo(x_position,y_position);
+              ctx.lineTo(x_position+single_object.width,y_position+0);
+              ctx.lineTo(x_position+single_object.width,y_position+single_object.height);
+              ctx.lineTo(x_position+0,y_position+single_object.height);
+              ctx.lineTo(x_position+0,y_position+0);
+              ctx.strokeStyle = "black";
+              ctx.lineWidth   = "2";
+              ctx.stroke() ;
+           }else if( single_object.type == "dot" ){
+               
+              ctx.beginPath();
+              ctx.arc(x_position, y_position , single_object.width, 0, 2 * Math.PI);
+              ctx.fill();
+
+           }else if( single_object.type == "text" ){
+              
+              ctx.font = ""+single_object.width+"px "+single_object.font ;
+              ctx.fillText( single_object.text(single_object.name)  , 
+                            x_position, 
+                            y_position + single_object.width
+                          );
+                           
+           }else{
+             outMessage.innerHTML = "Element Type not found : "+single_object.type ;
+           }
+        
+           if( single_object.details ){
+              
+               drawVector( single_object, single_object.details , x_position, y_position ) ;
+               
+           }
+
+           
+       }
+    
+    }
+    /*----------------------------------------------------------------*/
+    function scanVector( vec , scale ) {
+    /*----------------------------------------------------------------*/
+    
+       var layoutLength = vec.length ;
+
+       for( var i = 0 ; i < layoutLength ; i++ ){
+           
+           var ent = vec[i] ;
+           
+           if( ent.px ){
+           }else{
+              ent.x  = Math.round( ent.x * scale ) ;
+              ent.y  = Math.round( ent.y * scale ) ;
+           }
+
+           obj = ent.value ;
+
+
+           if( obj.type == "square" ){
+               obj.height = Math.round( obj.height * scale ) ;
+               obj.width  = Math.round( obj.width  * scale ) ;
+           }else if( obj.type == "dot" ){
+               obj.width  = Math.round( obj.width * scale ) ;
+           }else if( obj.type == "text" ){
+           
+           }else{
+               
+           }
+           
+           if( obj.details != null )scanVector( obj.details , scale ) ;
+       }
+    
+    }
+    /*----------------------------------------------------------------*/
+    function duplicateVector( inVector , scale , order ) {
+    /*----------------------------------------------------------------*/
+    
+       var layoutLength = inVector.length ;
+
+       var outVector = [] ;
+       
+       for( var i = 0 ; i < layoutLength ; i++ ){
+           
+           var vectorEntry = inVector[i] ;
+           
+           var outVectorEntry = {} ;
+           
+           /*
+            * Convert position of outVectorEntry ( x,y )
+            */
+           if( vectorEntry.px ){
+              if( order ){
+                 outVectorEntry.px = vectorEntry.px ;
+                 outVectorEntry.py = vectorEntry.py ;
+              }else{
+                 outVectorEntry.px = vectorEntry.py ;
+                 outVectorEntry.py = vectorEntry.px ;
+              }
+           }else{
+              if( order ){
+                 outVectorEntry.x = Math.round( vectorEntry.x * scale ) ;
+                 outVectorEntry.y = Math.round( vectorEntry.y * scale ) ;
+              }else{
+                 outVectorEntry.x = Math.round( vectorEntry.y * scale ) ;
+                 outVectorEntry.y = Math.round( vectorEntry.x * scale ) ;
+              }
+           }
+
+           /* 
+            * now handle the value part (the actual object)
+            */
+           var obj = vectorEntry.value ;
+
+           var outObject = {} ;
+           /*
+            * make a deep copy of the attributes.
+            */          
+           for( key in obj )outObject[key]  = obj[key] ;   
+
+           if( obj.type == "square" ){
+              if( order ){
+                 outObject.height = Math.round( obj.height * scale ) ;
+                 outObject.width  = Math.round( obj.width  * scale ) ;
+              }else{
+                 outObject.height = Math.round( obj.width * scale ) ;
+                 outObject.width  = Math.round( obj.height  * scale ) ;
+              }
+           }else if( obj.type == "dot" ){
+               outObject.width  = Math.round( obj.width * scale ) ;
+           }else if( obj.type == "text" ){
+           
+           }else{
+               
+           }
+           /*
+            * now the details (the vector of the content)
+            */
+           if( obj.details != null )outObject.details = duplicateVector( obj.details , scale, order ) ;
+           
+           outVectorEntry.value = outObject ;
+           
+           outVector.push( outVectorEntry ) ;
+       }
+       
+       return outVector ;
+    
+    }
+    /*---------------------------------------------*/
+    function getTextOf( key ) {
+    /*---------------------------------------------*/
+       if( key.indexOf( ".requested" ) !== -1 ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return v ; 
+          return "N.A." ;
+          
+       }else if( key.indexOf( ".temperature" ) !== -1 ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return v  ; 
+          return "N.A." ;
+       }else{  
+          return "unkown" ;
+       }
+    }
+    /*---------------------------------------------*/
+    function getColorOf( key ) {
+    /*---------------------------------------------*/
+       
+       
+       if( key == "appartment" ){
+           
+          var v = value_map["apartment.in"] ;
+          if( v )return v == "on" ? "red" : "white" ;
+              
+          return "gray" ; 
+          
+       }else if( key.indexOf( ".move" ) !== -1 ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return v > 0.5 ? "green" : "yellow" ; 
+          return "#aaaaaa" ;
+          
+       }else if( key.indexOf( ".requested" ) !== -1 ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return "red" ; 
+          return "black" ;
+          
+       }else if( key.indexOf( ".temperature" ) !== -1 ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return "black" ; 
+          return "black" ;
+          
+       }else if( ( key.indexOf( ".window" ) !== -1 ) ||  
+                 ( key.indexOf( ".door" )   !== -1 )    ){
+           
+          var v = value_map[key] ;
+          
+          if( v )return v > 0.5 ? "red" : "blue" ;    
+          return "gray" ;
+          
+       }else if( key.indexOf( ".light." ) !== -1 ){ 
+
+          var v = value_map[key] ;
+          
+          if( v )return v > 0.5 ? "red" : "blue" ;    
+          return "gray"
+       
+       }else{
+          return "orange" ;
+       }
+    }
+
+    /*---------------------------------------------*/
+     function sendRequest() {
+    /*---------------------------------------------*/
+        queryArray( ) ;
+     };
+    /*---------------------------------------------*/
+    function replyQueryArray(){
+    /*---------------------------------------------*/
+       //console.log("State : "+xhttp.readyState+"; Status : "+xhttp.status);
+       if( ( xhttp.readyState != 4 ) || ( xhttp.status != 200 ) )return false;
+
+       var x = interpretReplyQueryArray();
+
+       if( ! x )return false ;
+
+       renderReply(x) ;
+
+     }
+    /*---------------------------------------------*/
+    function renderReply( x ){
+    /*---------------------------------------------*/
+        value_map = x ;
+        //console.log("Map: "+JSON.stringify(value_map));
+        drawVector(null,ROOT,0,0);
+    };
+    /*---------------------------------------------*/
+    function reportError(em){
+    /*---------------------------------------------*/
+       // errMessage.innerHTML += ("/"+ em);
+       alert(em);
+    };
+    /*---------------------------------------------*/
+    function report(em){
+    /*---------------------------------------------*/
+       // outMessage.innerHTML = em;
+    };
+     

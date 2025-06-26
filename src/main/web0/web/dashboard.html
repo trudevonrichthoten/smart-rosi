@@ -1,0 +1,69 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rosi's Home Layout</title>
+<link rel="stylesheet" type="text/css" href="trude.css">
+<script src="rosicore.js"></script>
+<script src="dashboard.js"></script>
+<style>
+.cnt {
+   margin: auto;
+   border: 5px solid red;
+   display: block ;
+}
+.cntx {
+   margin: auto;
+   border: 5px solid #111111;
+   display: block ;
+}
+.nice {
+   color: yellow ;
+   background: black ;
+   font-family: Verdana, sans-serif;
+}
+td.nice {
+   background: green ;
+   padding-right: 50px;
+   padding-left: 5px;
+}
+div.nice {
+   font-size: 60px; 
+   background: blue ;
+   text-align: center ;
+}
+th.nice {
+   text-align: left ;
+   align: left;
+   background: #ddd;
+   color: blue;
+}
+table.nice {
+   cellspacing-right: 30px;
+}
+
+</style>
+</head>
+<body onload="initVars();" class="nice" >
+<button class="nice" onclick="clickUpdate()">Update</button>
+<br>
+<table  class="nice" border=0>
+<tr class="nice"> 
+   <th class="nice">Livingroom</th>
+   <th class="nice">Bathroom</th>
+   <th class="nice">Office</th>
+</tr>
+<tr class="nice">
+   <td class="nice"><div class="nice" id="livingroom.desired"></div></td>
+   <td class="nice"><div class="nice" id="bathroom.desired"></div></td>
+   <td class="nice"><div class="nice" id="office.desired"></div></td>
+</tr>
+<tr class="nice">
+   <td class="nice"><div class="nice"  id="livingroom.messured"></div></td>
+   <td class="nice"><div class="nice" id="bathroom.messured"></div></td>
+   <td class="nice"><div class="nice" id="office.messured"></div></td>
+</tr>
+
+</table>
+<address class="nice" id="outMessage">outMessage</address>
+</body>
+</html>

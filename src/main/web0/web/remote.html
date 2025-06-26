@@ -1,0 +1,315 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Smart Rosi Remote Control</title>
+<link rel="stylesheet" type="text/css" href="rosicore.css">
+<script src="rosicore.js"></script>
+<script src="remote.js"></script>
+</head>
+<body onload="initVars();">
+
+<table class="frame" id="frame">
+<tr class="frame">
+<td class="frame">
+<!--
+           HEAD TABLE
+-->
+<table class="rosiheader" id="rosihead">
+  <tr class="rosiheader" >
+     <td class="rosiheader" >
+        <div  class="rosiheader" id="rosipic"><img id="rosi" src="rosi-trans-vsmall.png"></div>
+     </td>
+     <td class="rosiheader" >
+        <div class="rosiheader"  id="rosiheadtext">Rosi Control</div>
+     </td>
+  </tr>
+<!--
+<tr>
+<td colspan=2>
+<canvas id="roomlayout" height="400" width="800" style="border:5px solid #ff44bb;">
+Your browser does not support the canvas element.
+</canvas>
+</td>
+</tr>
+--->
+</table>
+
+</td>
+</tr>
+<tr class="frame">
+<td class="frame">
+
+<!--
+          Button Table 
+-->
+<table id="buttontable" class="buttontable">
+<tr class="buttontable"> 
+   <td colspan=3 class="buttontable">
+      <button class="bigbutton" onclick="clickUpdate()">Update</button>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable" colspan=3 >
+      <div class="bigdisplay" id="apartment.in"  >Appartment</div>
+   </td>
+</tr> 
+<tr class="buttontable">
+   <td class="buttontable">
+      <button class="bigbutton"
+              onclick="setVariable('hallway.button.02','*');">
+        In
+      </button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton"
+              onclick="setVariable('hallway.button.01','*');">Out</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton"
+              onclick="setVariable('vacation.dummy','*');">Vacation</button>
+   </td>
+</tr>
+<tr class="buttontable"> 
+   <td colspan=3><div class="buttonheader">Temperatures</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <th class="buttontable">
+      <div class="bigdisplay" >Location</div>
+   </th>
+   <th class="buttontable">
+      <div class="bigdisplay">Desired</div>
+   </td>
+   <th class="buttontable">
+      <div class="bigdisplay">Current</div>
+   </th>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Livingroom</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="livingroom.desired">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="livingroom.current">0.0</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Livingroom</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" >0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="hallway.current">0.0</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Bathroom</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="bathroom.desired">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="bathroom.current">0.0</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Office</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="office.desired">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="office.current">0.0</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td colspan=3><div class="buttonheader">Brightness</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <th class="buttontable">
+      <div class="bigdisplay" >Location</div>
+   </th>
+   <th class="buttontable">
+      <div class="bigdisplay">Brightness</div>
+   </th>
+   <th class="buttontable">
+      <div class="bigdisplay">Motion</div>
+   </th>
+</tr>
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Livingroom</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="livingroom.brightness">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="livingroom.move">*</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Bathroom</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="bathroom.brightness">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="bathroom.move">*</div>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <div class="bigdisplay" >Hallway</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="hallway.brightness">0.0</div>
+   </td>
+   <td class="buttontable">
+      <div class="bigdisplay" id="hallway.move">*</div>
+   </td>
+</tr> 
+<tr class="buttontr"> 
+   <td class="buttontd">
+      <div class="bigdisplay" >Office</div>
+   </td>
+   <td class="buttontd">
+      <div class="bigdisplay" id="office.brightness">0.0</div>
+   </td>
+   <td class="buttontd">
+      <div class="bigdisplay" id="office.move">*</div>
+   </td>
+</tr> 
+<tr> 
+   <td colspan=3><div class="buttonheader">Light Livingroom</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.08.long','*');">
+        Auto
+      </button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.07','*');">On</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.08','*');">Off</button>
+   </td>
+</tr>
+<tr class="buttontable"> 
+   <td colspan=3><div class="buttonheader">Temperature Bathroom</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.02.long','*');">
+        Auto
+      </button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.02','*');">Medium</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.01','*');">Hot</button>
+   </td>
+</tr>
+<tr class="buttontable"> 
+   <td colspan=3><div class="buttonheader">Remote Control</div></td>
+</tr> 
+<!--
+           R E M O T E   C O N T R O L
+-->
+<tr class="buttontable"> 
+   <td colspan=3 class="buttontable">
+      <button class="bigbutton" id="officehighlow"
+              onclick="setVariable('remote.control.01.long','*');">Office High/Low</button>
+   </td>
+</tr> 
+<tr class="buttontable"> 
+   <td colspan=3><div class="smallbuttonheader">Temperature</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.01','*');">ON</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.02','*');">Sleeping</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.02.long','*');">Auto</button>
+</tr> 
+<tr class="buttontable"> 
+   <td colspan=3><div class="smallbuttonheader">Bathroom Temperature</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.03','*');">High</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.04','*');">Low</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.04.long','*');">Auto</button>
+</tr> 
+<tr class="buttontable"> 
+   <td colspan=3><div class="smallbuttonheader">All Light</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.05','*');">On</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.06','*');">Off</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.06.long','*');">Auto</button>
+</tr> 
+<tr class="buttontable"> 
+   <td colspan=3><div class="smallbuttonheader">Light Livingroom</div></td>
+</tr> 
+<tr class="buttontable"> 
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.07','*');">On</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.08','*');">Off</button>
+   </td>
+   <td class="buttontable">
+      <button class="bigbutton" 
+              onclick="setVariable('remote.control.08.long','*');">Auto</button>
+</tr> 
+<tr class="buttontable" id="configurationId"> 
+   <td colspan=3><div class="buttonheader">Configuration</div></td>
+</tr> 
+
+</table>
+</td>
+
+</tr>
+</table>
+<hr>
+<address style="display:none"  id="outMessage">outMessage</address>
+<address style="display:none" id="errorMessage">errorMessage</address>
+</body>
+</html>

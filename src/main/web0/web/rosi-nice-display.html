@@ -1,0 +1,146 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>This is the first java script attempt</title>
+<link rel="stylesheet" type="text/css" href="rosi.css">
+<link rel="stylesheet" type="text/css" href="rosi-nice-display.css">
+<!--
+<link rel="stylesheet" type="text/css" href="MooTools-Core-1.6.0.js">
+<link rel="stylesheet" type="text/css" href="datepicker.js">
+-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="rosicore.js"></script>
+<script type="text/javascript" src="rosi-nice.js"></script>
+<style type="text/css">
+img.details {
+ filter: none ;
+}
+table.details {
+   background-color: blue;   
+}
+button.details {
+   font-family:Verdana;
+   font-size: 1.0em ;
+   
+}
+td.details {
+   background-color: orange;   
+   border: 4px solid yellow ;
+   width: 25% ;
+   margin: auto;
+   font-family:Verdana;
+   font-size: 2em ;
+}
+span.details {
+  border: 4px solid green ;
+  /* border-left-width: 10  ; */
+   display: inline ;
+   background-color: gray;   
+}
+img.details {
+   width: 200 ;   
+}
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white ; /*  rgba(0,0,0,1.0); Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+#text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  color: green;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+</style>
+
+</head>
+<body onload="bodyLoaded();">
+
+<div id="overlay">
+  <div id="text">Please wait ...</div>
+</div>
+
+<table class="frame" id="frame">
+<tr class="frame">
+<td class="frame">
+<!--
+           HEAD TABLE
+-->
+<table class="rosiheader" id="rosihead">
+  <tr class="rosiheader" >
+     <td class="rosiheader" >
+        <div  class="rosiheader" id="rosipic"><img id="rosi" src="rosi-trans-vsmall.png"></div>
+     </td>
+     <td class="rosiheader" >
+        <div class="rosiheader"  id="rosiheadtext">Rosi Control</div>
+     </td>
+  </tr>
+</table>
+
+</td>
+</tr>
+<tr class="frame">
+<td class="frame">
+
+<!--
+          Button Table 
+-->
+<table class="details">
+ <tr class="details">
+   <td colspan=3 class="details"><button class="details" onclick="clickUpdate()">Update</button></td>
+ </tr>
+ <tr class="details">
+   <td colspan=3 class="details">Livingroom</td>
+ </tr>
+ <tr class="details">
+   <td class="details" id="livingroom.temperature"></td>
+   <td class="details" id="livingroom.brightness"></td>
+   <td class="details"><img class="details" id="livingroom.motion"></td>
+ </tr>
+ <tr class="details">
+   <td colspan=3 class="details">Bathroom</td>
+ </tr>
+ <tr class="details">
+   <td class="details" id="bathroom.temperature"></td>
+   <td class="details" id="bathroom.brightness"></td>
+   <td class="details"><img class="details" id="bathroom.motion"></td>
+ </tr>
+ <tr class="details">
+   <td colspan=3 class="details">Hallway</td>
+ </tr>
+ <tr class="details">
+   <td class="details" id="hallway.temperature"></td>
+   <td class="details" id="hallway.brightness"></td>
+   <td class="details"><img class="details" id="hallway.motion"></td>
+ </tr>
+ <tr class="details">
+   <td colspan=3 class="details">Office</td>
+ </tr>
+ <tr class="details">
+   <td class="details" id="office.temperature"></td>
+   <td class="details" id="office.brightness"></td>
+   <td class="details"><img class="details" id="office.motion"></td>
+ </tr>
+</table>
+
+</td>
+
+</tr>
+</table>
+<hr>
+<address style="display:none"  id="outMessage">outMessage</address>
+<address style="display:none" id="errorMessage">errorMessage</address>
+</body>
+</html>

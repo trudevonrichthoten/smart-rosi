@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Rosi's parameter List</title>
+<link rel="stylesheet" type="text/css" href="rosi.css">
+<!--
+<link rel="stylesheet" type="text/css" href="rosi-nice-display.css">
+<script type="text/javascript" src="rosi-all-list.js"></script>
+-->
+
+<style type="text/css">
+table.pattable {
+  background-color: white ;
+  font-size: 1.8em ;
+}
+tr.pattable:nth-child(even) {
+  background-color: #eee ;
+}
+td.patdir {
+   background-color: #ffe ;
+   color: black ;
+   border-bottom: 1px solid black ; 
+}
+td.patkey {
+   border-bottom: 1px solid black ; 
+}
+td.patvalue {
+   border-bottom: 1px solid black ;
+}
+table.paramtable {
+}
+tr.paramtable:nth-child(even) {
+   background-color: orange ;
+}
+th.paramtable {
+  background-color: navy ;
+  color: white ;
+}
+img.details {
+ filter: none ;
+}
+table.details {
+   background-color: blue;   
+}
+button.details {
+   font-family:Verdana;
+   font-size: 1.0em ;
+   
+}
+td.details {
+   background-color: orange;   
+   border: 4px solid yellow ;
+   width: 25% ;
+   margin: auto;
+   font-family:Verdana;
+   font-size: 2em ;
+}
+span.details {
+  border: 4px solid green ;
+  /* border-left-width: 10  ; */
+   display: inline ;
+   background-color: gray;   
+}
+img.details {
+   width: 200 ;   
+}
+</style>
+
+<script>
+function bodyLoaded(){
+   textBoxField  = document.getElementById("textBox") ;
+   textBoxField2 = document.getElementById("textBox2") ;
+   textBoxField3 = document.getElementById("textBox3") ;
+   xhttp = new XMLHttpRequest();
+   totalCount = 0 ;
+}
+function updateList(){
+   textBoxField.innerHTML = "<h1>hallo</h1>Dickes Schweinchen" ;
+   queryArray() ;
+}
+    /*---------------------------------------------*/
+     function queryArray( ) {
+    /*---------------------------------------------*/
+
+        var qs = "{ \"elist\" : [ { \"method\" : \"get\" , \"name\" : \".*\" } ] }" ;
+        // report(qs);
+        xhttp.onreadystatechange = replyQueryArray ;
+        xhttp.open("POST", "/memory/json", true);
+        xhttp.send(qs);
+     };
+    /*---------------------------------------------*/
+    function replyQueryArray(){
+    /*---------------------------------------------*/
+       if (xhttp.readyState == 4 && xhttp.status == 200) {
+          // report("replyQueryArray received string : "+xhttp.responseText);
+          var jsob = JSON.parse(xhttp.responseText);
+          if( jsob.result == undefined ){
+             // reportError("Not a proper reply from Rosi, no 'result'");
+          }else if( jsob.result != 0 ){
+             // reportError("Error in reply ("+jsob.result+") : "+jsob.errorMessage);
+          }else{
+            var out = printEasyTable( jsob ) ;
+
+            //textBoxField.innerHTML = out ; 
+
+            var big = makeBigTable( jsob ) ;
+
+            out = "<h1>Top Parameter</h1>" ;
+            out = printParameterArray( big , out ) ;
+            textBoxField.innerHTML = out ;
+
+            out = "<h1>Parameter Table</h1>" ;
+            out = out + "<table class=\"pattable\"><tr class=\"pattable\">"  ;
+            out = printParameterArrayTable( big , out , 0 , 15 ) ;
+            out = out + "</table>\n" ;
+
+            textBoxField2.innerHTML = out ;
+
+            textBoxField3.innerHTML  = printEasyTable( jsob ) ; 
+          }
+       }
+     }
+     function makeBigTable( jsonIn ){
+    /*---------------------------------------------*/
+        var big = {} ;
+        var l = jsonIn.elist[0].list.length ;
+        for( var i = 0 ; i < l ; i++ ){
+           var n = jsonIn.elist[0].list[i] ;
+           var name = n.name.split(".") ;
+           ll = name.length ;
+           var cursor = big ;
+           for( var j = 0 ; j < ll -1 ; j++ ){
+              if( cursor[name[j]] ){
+
+              }else{
+                cursor[name[j]] = {} ;
+              }
+              cursor = cursor[name[j]] ;
+           }
+           cursor[name[ll-1]] = n.value ;
+        }
+        return big ;
+     }
+     function GetSortOrder(prop) {  
+    /*---------------------------------------------*/
+       return function(a, b) {  
+        if (a[prop] > b[prop]) {  
+            return 1;  
+        } else if (a[prop] < b[prop]) {  
+            return -1;  
+        }  
+        return 0;  
+       }  
+     } 
+     function printEasyTable( jsonIn ){
+    /*---------------------------------------------*/
+        var out = "<h1>Result</h1>\n" ;
+        out = out + "<table class=\"paramtable\">\n" ;
+        out = out + "<tr class=\"paramtable\">" +
+                    "<th class=\"paramtable\">Parameter Name</th>"+
+                    "<th class=\"paramtable\">Parameter Value</th>";
+        var array = jsonIn.elist[0].list ;
+        array.sort(GetSortOrder("name"));
+        var l = array.length ;
+        for( var i = 0 ; i < l ; i++ ){
+          var n = array[i] ;
+          out = out + "<tr class=\"paramtable\"><td class=\"paramtable\">" +
+              n.name+ "</td><td class=\"paramtable\">"+n.value+"</td></tr>";
+        }
+        out = out + "</table>\n" ;
+        return out ;
+     }
+     function countRows( array ){
+    /*---------------------------------------------*/
+        var c = 0 ;
+        for( var nxt in array){
+           if(  ( typeof array[nxt] === 'object' ) && ( nxt !== null ) ){
+              c += countRows( array[nxt] ) ;
+           }else{
+              c += 1 ;
+           } 
+        }
+        return c ;
+     }
+     function printParameterArrayTable( array , out , rowCount , maxRows ){
+    /*---------------------------------------------*/
+        var rows = 0 ;
+        totalCount++ ; 
+        for( var nxt in array){
+           if( ! (  ( typeof array[nxt] === 'object' ) && ( nxt !== null ) ) ){
+              if( rows++ > 0 )out += "<tr class=\"pattable\">\n";
+              var nn = maxRows - rowCount ;
+              out += "<td class=\"patkey\">"+nxt+"</td>"+
+                     "<td class=\"patvalue\" colspan="+nn+">"+array[nxt]+"</td>\n" ;
+              out += "</tr>\n";
+           } 
+        }
+        for( var nxt in array){
+           if(  ( typeof array[nxt] === 'object' ) && ( nxt !== null ) ){
+              if( rows++ > 0 )out += "<tr class=\"pattable\">\n";
+              var c = countRows( array[nxt] ) ;
+              out += "<td rowspan="+c+" class=\"patdir\">"+nxt+"</td>\n" ;
+              out = printParameterArrayTable(array[nxt],out,rowCount+1,maxRows);
+           }
+        }
+        return out ;
+     }
+     function printParameterArray( array , out ){
+    /*---------------------------------------------*/
+        out = out + "<ul>" ;
+        for( var nxt in array){
+           if( ! ( ( typeof array[nxt] === 'object' ) && ( nxt !== null ) ) ){
+              out = out + "<li>"+nxt+" : "+array[nxt]+"</li>" ;
+           }
+        }
+        for( var nxt in array){
+           if(  ( typeof array[nxt] === 'object' ) && ( nxt !== null ) ){
+              var c = countRows(array[nxt]) ;
+              out = out + "<li><strong>"+nxt+"</strong> ("+c+")</li>" ;
+              out = printParameterArray(array[nxt],out);
+           }
+        }
+        return out + "</ul>" ;
+     }
+
+
+</script>
+</head>
+<body onload="bodyLoaded();">
+
+<table class="frame" id="frame">
+<tr class="frame">
+<td class="frame">
+<!--
+           HEAD TABLE
+-->
+<table class="rosiheader" id="rosihead">
+  <tr class="rosiheader" >
+     <td class="rosiheader" >
+        <div  class="rosiheader" id="rosipic"><img id="rosi" src="rosi-trans-vsmall.png"></div>
+     </td>
+     <td class="rosiheader" >
+        <div class="rosiheader"  id="rosiheadtext">Rosi Control</div>
+     </td>
+  </tr>
+</table>
+
+</td>
+</tr>
+<tr><td>
+<button class="bigbutton" onclick="updateList();">Update List</button>
+</td></tr>
+<tr class="frame">
+<td class="frame">
+<div id="textBox2"></div>
+</td>
+</tr>
+<tr class="frame">
+<td class="frame">
+<div id="textBox3">Text Box 3</div>
+</td>
+</tr>
+<tr class="frame">
+<td class="frame">
+<div id="textBox"></div>
+</td>
+</tr>
+</table>
+<hr>
+<address style="display:none"  id="outMessage">outMessage</address>
+<address style="display:none" id="errorMessage">errorMessage</address>
+</body>
+</html>
