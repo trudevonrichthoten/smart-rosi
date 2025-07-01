@@ -1,0 +1,4 @@
+"LED04#red:(.*)" "kitchen.led.01.red" "${1}"
+"LED04#blue:(.*)" "kitchen.led.01.blue" "${1}"
+"LED04#green:(.*)" "kitchen.led.01.green" "${1}"
+"BIO04#(.*):(.*)" "kitchen.bio.01.${1}" "${2}"

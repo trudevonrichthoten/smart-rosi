@@ -1,0 +1,49 @@
+doNormalLight(){
+
+ allLightsSwitch("off");
+ kitchen.led.01.white = 0.0; 
+
+ ( ( office.motion.brightness < 60 ) & office.motion.delayed ) : 
+ {
+     office.light.01.state = "on" ;
+ }; 
+
+ ( hallway.door.delayed | hallway.motion.delayed ) :
+ {
+    hallway.light.01.state = "on" ;
+ };
+
+ ( livingroom.brightness < 60 ) & ( ( remoteL4.state == "on" ) | ( remoteL4.state == "automatic" ) ) : 
+ {
+    livingroom.light.01.state = "on" ;
+    livingroom.light.03.state = "on" ;
+    diningroom.light.01.state = "on" ;
+
+    livingroom.motion.delayed :
+    {
+       livingroom.light.02.state = "on" ;
+    };
+ }
+ ( remoteL4.state == "on" ) :
+ {
+       livingroom.light.01.state = "on" ;
+       livingroom.light.02.state = "on" ;
+       livingroom.light.03.state = "on" ;
+       diningroom.light.01.state = "on" ;
+ }
+ ( remoteL4.state == "off" ) :
+ {
+     tp.wakemeup & ( global.holidays == "off" ) :
+     {
+          livingroom.light.02.state = "on" ;
+     };
+ };
+
+
+ ( (bathroom.motion.brightness < 60 ) &  bathroom.motion.delayed ) :
+ {
+     bathroom.light.01.state = "on" ;
+     bathroom.light.02.state = "on" ;
+     kitchen.led.01.white   = 1.0 ;
+ };
+}

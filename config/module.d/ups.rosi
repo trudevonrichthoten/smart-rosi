@@ -1,0 +1,68 @@
+handleUPS(){
+/*
+ *  rosiSays("'handleUPS' called! "+aeg.battery.voltage);
+ */
+   aeg.ups.status == "battery" : 
+   {
+       hallway.ups.speak = "we are now running on reserved battery" ;
+       power.main = "off" ;
+   }
+   aeg.ups.status == "net" :
+   {
+       hallway.ups.speak = "we are online again" ;
+       power.main = "on" ;
+   };
+
+/*
+ *   storage.shutdown.status  : 
+ *       idle 
+ *       storage_shutdown_os_in_progress
+ *       storage_shutdown_os_finished
+ *       storage_shutdown_power_in_progress
+ *       storage_shutdown_power_finished
+ */
+   storage.shutdown.status == "idle" :
+   {
+       aeg.battery.charge < 50  :
+       {
+           storage.shutdown.status = "storage_shutdown_os_in_progress" ;
+           storage.shutdown.timer  = System.now() ;
+           /*
+            * send shutdown to 'storage'
+            */
+           storage.system          = "shutdown" ;
+       };
+   }
+   storage.shutdown.status == "storage_shutdown_os_in_progress" :
+   {
+       ( System.now() - storage.shutdown.timer )  > 120000 :
+       {
+           storage.shutdown.status = "storage_shutdown_os_finished" ;
+           storage.shutdown.timer  = System.now() ;
+       };
+   }
+   storage.shutdown.status == "storage_shutdown_os_finished" :
+   {
+           storage.shutdown.status = "storage_shutdown_power_in_progress" ;
+           storage.shutdown.timer  = System.now() ;
+           /*
+            * send power off to 'storage'
+            */
+           storage.power           = "off" ;
+   }
+   storage.shutdown.status == "storage_shutdown_power_in_progress" :
+   {
+           storage.shutdown.status = "storage_shutdown_power_finished" ;
+           storage.shutdown.timer  = System.now() ;
+   }
+   storage.shutdown.status == "storage_shutdown_power_finished" :
+   {
+       ( aeg.ups.status == "net" ) & ( aeg.battery.charge < 60 )  :
+       {
+           storage.shutdown.status = "idle" ;
+           storage.shutdown.timer  = System.now() ;
+           storage.power           = "on" ;
+           storage.system          = "on" ;
+       }; 
+   };
+}

@@ -1,0 +1,8 @@
+"LEQ0784167.temperature:(.*)"      "livingroom.heater.temperature.messured" "${1}"
+"LEQ0784167.battery_low:(.*)"      "livingroom.heater.battery.low"          "${1}"
+"LEQ0784167.battery:(.*)"          "livingroom.heater.battery.voltage"      "${1}"
+"LEQ0784167.valve:(.*)"            "livingroom.heater.valve"                "${1}"
+"LEQ1239902.temperature:(.*)"      "bathroom.heater.temperature.messured" "${1}"
+"LEQ1239902.battery_low:(.*)"      "bathroom.heater.battery.low"          "${1}"
+"LEQ1239902.battery:(.*)"          "bathroom.heater.battery.voltage"      "${1}"
+"LEQ1239902.valve:(.*)"            "bathroom.heater.valve"                "${1}"

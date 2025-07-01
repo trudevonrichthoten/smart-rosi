@@ -1,0 +1,68 @@
+/*
+ * ------------------------------------------------+
+ *   do things when noone is in the appartement. |
+ * ------------------------------------------------+
+ *
+ */
+doWork(){
+
+
+/*
+ *  rosiSays("Woker called");
+ */
+
+   livingroom.motion.delayed : { livingroom.move = "on" ;  } { livingroom.move = "off";  } ;
+   bathroom.motion.delayed   : { bathroom.move = "on"   ;  } { bathroom.move = "off";  } ;
+   hallway.motion.delayed    : { hallway.move = "on"    ;  } { hallway.move = "off";  } ;
+   office.motion.delayed     : { office.move  = "on"    ;  } { office.move  = "off";  } ;
+
+
+   global.autoVacationMode.state == "on" :
+   {
+      global.someOneIsIn :
+      {
+          ( global.enteredTime.first + global.autoVacationMode.allowIn ) > System.now() :
+          {
+             allLightsSwitch("on") ;
+          }
+          {
+              someOneLeft() ;
+          };
+      }
+      {
+          doTheFakedLightShow() ;
+          setTemperatureLow() ;
+      };
+
+   }
+   { 
+      global.someOneIsIn :
+      {
+          doNormalLight() ;
+          doNormalTemperature() ;
+      }
+      {
+          doTheFakedLightShow() ;
+          setTemperatureLow() ;
+      };
+
+   };
+   /*
+    * independed light
+    */
+   ( tp.evenings & ( livingroom.brightness < 80 ) ):
+   {
+          balcony.light.01.state = "on" ;
+   }
+   {
+          balcony.light.01.state = "off" ;
+   } ;
+
+  ( hallway.button.02.delay | hallway.door.delayed ) :
+  {
+
+      hallway.light.01.state = "on" ;
+
+  };
+
+}

@@ -1,0 +1,411 @@
+/*
+ * Trigger sensors
+ */
+define sensor hallway.door          "closed"    trigger ;
+define sensor livingroom.motion     "something" trigger ;
+define sensor livingroom.window     "closed"    trigger ;
+define sensor hallway.motion        "something" trigger ;
+define sensor office.window         "closed"    trigger ;
+define sensor bathroom.motion.counter       "something" trigger ;
+define sensor office.motion.counter         "something" trigger ;
+/*
+ * simulated sensores in file system. 
+ */
+define sensor livingroom.temperature.nice  20.0 ;
+define sensor livingroom.temperature.low   15.0 ;
+define sensor bathroom.temperature.nice    20.0 ;
+define sensor bathroom.temperature.drying  18.0 ;
+define sensor bathroom.temperature.low     15.0 ;
+define sensor office.temperature.nice      23.0 ;
+define sensor office.temperature.low       16.0 ;
+define sensor global.autoVacationMode.allowIn  300000 ;
+define sensor global.holidays              "off" ;
+/*
+ * The AEG UPS sensors
+ */
+define sensor  aeg.battery.voltage  210.0 ;
+define sensor  aeg.battery.charge   100 ;
+define sensor  aeg.ups.temperature  25.0 ;
+define sensor  aeg.ups.status       "unknown" trigger_if_changed;
+/*
+ * The Lazy sensors
+ */
+define sensor livingroom.bio.01.temperature  10.0 ;
+define sensor livingroom.bio.01.soil         0.00001 ;
+define sensor livingroom.bio.01.pressure     1001.0 ;
+define sensor livingroom.bio.01.humidity     50.0 ;
+define sensor livingroom.bio.02.temperature  10.0 ;
+define sensor livingroom.bio.02.quality      0.00001 ;
+define sensor livingroom.bio.02.pressure     1001.0 ;
+define sensor livingroom.bio.02.humidity     50.0 ;
+
+define sensor livingroom.heater.temperature.messured     10.0 ;
+define sensor livingroom.heater.battery.voltage          1.0 ;
+define sensor livingroom.heater.battery.low              false ;
+define sensor livingroom.heater.valve                    0 ;
+
+define sensor kitchen.led.01.red                         0.0 ;
+define sensor kitchen.led.01.blue                        0.0;
+define sensor kitchen.led.01.green                       0.0;
+define sensor kitchen.bio.01.temperature                 0.0;
+define sensor kitchen.bio.01.pressure                    0.0;
+define sensor kitchen.bio.01.humidity                    0.0;
+define sensor kitchen.bio.01.dewpoint                    0.0;
+
+define sensor bathroom.heater.temperature.messured     10.0 ;
+define sensor bathroom.heater.battery.voltage          1.0 ;
+define sensor bathroom.heater.battery.low              false ;
+define sensor bathroom.heater.valve                    0 ;
+
+define sensor office.heater.temperature.messured 10.0 ;
+
+define sensor hallway.brightness    200 ;
+define sensor livingroom.brightness 200 ;
+define sensor bathroom.motion.brightness   200 ;
+define sensor office.motion.brightness     200 ;
+/*
+ * The remote control 
+ */
+define sensor hallway.button.01      "unknown"   trigger ;
+define sensor hallway.button.01.long "unknown"   trigger ;
+define sensor hallway.button.02      "unknown"   trigger ;
+define sensor hallway.button.02.long "unknown"   trigger ;
+define sensor remote.control.01      "unknown"   trigger ;
+define sensor remote.control.01.long "unknown"   trigger ;
+define sensor remote.control.02      "unknown"   trigger ;
+define sensor remote.control.02.long "unknown"   trigger ;
+define sensor remote.control.03      "unknown"   trigger ;
+define sensor remote.control.03.long "unknown"   trigger ;
+define sensor remote.control.04      "unknown"   trigger ;
+define sensor remote.control.04.long "unknown"   trigger ;
+define sensor remote.control.05      "unknown"   trigger ;
+define sensor remote.control.05.long "unknown"   trigger ;
+define sensor remote.control.06      "unknown"   trigger ;
+define sensor remote.control.06.long "unknown"   trigger ;
+define sensor remote.control.07      "unknown"   trigger ;
+define sensor remote.control.07.long "unknown"   trigger ;
+define sensor remote.control.08      "unknown"   trigger ;
+define sensor remote.control.08.long "unknown"   trigger ;
+
+/*
+ * mobile sensor
+ */
+define sensor mapp "auto" trigger ;
+/*
+ * Homematic actors
+ */
+define actor livingroom.heater.temperature.desired  12.0 ;
+define actor bathroom.heater.temperature.desired    12.0 ;
+define actor office.heater.temperature.desired      12.0 ;
+
+define actor livingroom.light.01.state "off" ;
+define actor livingroom.light.02.state "off" ;
+define actor bathroom.light.01.state   "off" ;
+define actor bathroom.light.02.state   "off" ;
+define actor hallway.light.01.state    "off" ;
+define actor hallway.light.02.state    "off" ;
+define actor kitchen.light.01.state  "off" ;
+define actor kitchen.light.02.state  "off" ;
+define actor storage.system     "on"  ;
+define actor storage.power      "on"  ;
+/*
+ * Fritzbox actors
+ */
+define actor livingroom.light.03.state "off" ;
+define actor balcony.light.01.state    "off" ;
+define actor diningroom.light.01.state "off" ;
+define actor office.light.01.state     "off" ;
+/*
+ * HTTP Environment Control and camera
+ */
+define actor livingroom.leds.01.red   0.0 ;
+define actor livingroom.leds.01.blue  0.0;
+define actor livingroom.leds.01.green 0.0 ;
+define actor kitchen.led.01.random    0.0 ;
+define actor kitchen.led.01.white     0.0 ;
+define actor hallway.camera.01        0 ;
+define actor balcony.light.beamer       "off" ;
+define actor balcony.light.tree         "off" ;
+define actor balcony.light.xMasChain    "off" ;
+define actor balcony.light.fence        "off" ;
+/*
+ * RSCM actors (power)
+ */
+define actor power.level1       "on" ;
+define actor power.level2       "on" ;
+/*
+ * for ganglia only (not really an actor)
+ */
+define actor livingroom.move    "unknown" ;
+define actor hallway.move       "unknown" ;
+define actor bathroom.move      "unknown" ;
+define actor office.move        "unknown" ;
+define actor apartment.in       "off" ;
+define actor hallway.door.open  "off" ;
+define actor livingroom.window.open  "off" ;
+define actor office.window.open      "off" ;
+define actor unexpected.event   "none" ;
+define actor hallway.ups.speak      "nothing" ;
+define actor hallway.welcome.speak  "nothing" ;
+define actor power.main         "on" ;
+/*
+ * converts for delays and events. 
+ */
+define event    hallway.button.01.event       hallway.button.01 ;
+define event    hallway.button.01.long.event  hallway.button.01.long ;
+define event    hallway.button.02.event       hallway.button.02 ;
+define event    hallway.button.02.long.event  hallway.button.02.long ;
+define event    hallway.door.event           hallway.door  trigger "open" ;
+
+define monoflop hallway.button.01.delay    hallway.button.01  60 ;
+define monoflop hallway.button.02.delay    hallway.button.02 180 ;
+define monoflop hallway.door.delayed      hallway.door       120  trigger "open" ;
+define monoflop hallway.door.20min        hallway.door      1200  trigger "open" ;
+define monoflop livingroom.window.delayed livingroom.window  120  trigger "open" ;
+define monoflop office.window.delayed     office.window      120  trigger "open" ;
+define monoflop livingroom.motion.delayed livingroom.motion  600 ;
+define monoflop hallway.motion.delayed    hallway.motion     120 ;
+define monoflop bathroom.motion.delayed   bathroom.motion.counter    300 ;
+define monoflop office.motion.delayed     office.motion.counter      120 ;
+
+define event remote01.event      remote.control.01       ;
+define event remote01.long.event remote.control.01.long  ;
+define event remote02.event      remote.control.02       ;
+define event remote02.long.event remote.control.02.long  ;
+define event remote03.event      remote.control.03       ;
+define event remote03.long.event remote.control.03.long  ;
+define event remote04.event      remote.control.04       ;
+define event remote04.long.event remote.control.04.long  ;
+define event remote05.event      remote.control.05       ;
+define event remote05.long.event remote.control.05.long  ;
+define event remote06.event      remote.control.06       ;
+define event remote06.long.event remote.control.06.long  ;
+define event remote07.event      remote.control.07       ;
+define event remote07.long.event remote.control.07.long  ;
+define event remote08.event      remote.control.08       ;
+define event remote08.long.event remote.control.08.long  ;
+
+define random random.01.short 600 1200 800 1200  ;
+define random random.01.long  3600 4500 3600 4500 ;
+/*
+ * ------------------------------------------------+
+ *   Initialization (define global variables)      |
+ * ------------------------------------------------+
+ */
+initialize(){
+
+   remoteL1.state = "automatic" ; 
+   remoteL2.state = "automatic" ; 
+   remoteL3.state = "automatic" ; 
+   remoteL4.state = "automatic" ; 
+
+   global.office.temperature.on = false ;
+
+   livingroom.light.01.state = "off" ;
+   livingroom.light.02.state = "off" ;
+   livingroom.light.03.state = "off" ;
+   balcony.light.01.state   = "off" ;
+
+   global.someOneIsIn = false ;
+
+   tp.workday.morning = false ;
+   tp.dayoff.morning  = false ;
+   tp.wakemeup        = false ;
+   tp.evenings        = false ;
+   tp.blueHour        = false ;
+   tp.homeFromVacation  = false ;
+   tp.bathroom.warm   = false ;
+
+   storage.shutdown.status = "idle" ;
+   storage.shutdown.timer  = 0 ;
+
+   global.autoVacationMode.state   = "off" ;
+   global.autoVacationMode.timer   = 0 ;
+   global.autoVacationMode.delay   = 120000 ;
+   global.autoVacationMode.now     = 0 ;
+
+   global.livingroom.leds   = false ;
+   global.balcony.light     = 0 ;
+
+   global.enteredTime.first  = 0 ;
+   global.enteredTime.last   = 0 ;
+
+}
+/*
+ * ------------------------------------------------+
+ *   The MAIN routine                              |
+ * ------------------------------------------------+
+ */
+main(){
+
+   updateTimePatches() ;
+
+   remoteControlInit() ;
+
+   checkIfSomeoneIsIn() ;
+   initializeAutoVacation() ;
+   
+   doWork() ;
+
+   handleUPS() ;
+
+   remoteControlOverwrite();
+
+   handleLeds01();
+
+   checkEmergency() ;
+
+}
+/*
+ * Tri State Remote Control.
+ * -----------------------------
+ */
+remoteControlInit(){
+
+   remote01.event      : { remoteL1.state = "on" ; } ;
+   remote02.event      : { remoteL1.state = "off" ; } ;
+   remote02.long.event : { remoteL1.state = "automatic" ; } ;
+
+   remote03.event : { remoteL2.state = "on" ; } ;
+   remote04.event : { remoteL2.state = "off" ; } ;
+   remote04.long.event : { remoteL2.state = "automatic" ; } ;
+
+   remote05.event : { remoteL3.state = "on" ; } ;
+   remote06.event : { remoteL3.state = "off" ; } ;
+   remote06.long.event : { remoteL3.state = "automatic" ; } ;
+
+   remote07.event : { remoteL4.state = "on" ; } ;
+   remote08.event : { remoteL4.state = "off" ; } ;
+   remote08.long.event : { remoteL4.state = "automatic" ; } ;
+
+}
+/*
+ * ------------------------------------------------+
+ *   Check if someone is in the appartment.        |
+ * ------------------------------------------------+
+ */
+someOneEntered(){
+   ( ! global.someOneIsIn ) :
+   {
+      global.enteredTime.first = System.now() ;
+      global.enteredTime.last  = System.now() ;
+   }
+   {
+      global.enteredTime.last  = System.now() ;
+   } ;
+   global.someOneIsIn       = true ; 
+   hallway.welcome.speak    = "Halloo" ;
+
+}
+someOneLeft(){
+   global.someOneIsIn       = false ; 
+   global.enteredTime.first = 0 ;
+   global.enteredTime.last  = 0 ;
+   hallway.welcome.speak    = "Bye, Bye" ;
+}
+checkIfSomeoneIsIn(){
+
+   someOneEntered = hallway.door.event ;
+   someOneLeft    = hallway.button.01.event ;
+   blockSystem    = hallway.button.01.delay ;
+   forcedEntrance = hallway.button.02.event ;    
+
+   ( someOneEntered & ( ! blockSystem ) ) | forcedEntrance :
+   {
+       someOneEntered();
+   } 
+   ( someOneLeft & ( livingroom.window == "closed" ) & ( office.window == "closed" ) )  : 
+   { 
+       someOneLeft();
+   }
+   ( someOneLeft & ( ( livingroom.window == "open" ) | ( office.window == "open" ) ) )  : 
+   { 
+      global.someOneIsIn = true ; 
+      hallway.welcome.speak = "There is still a window open. Please close all windows before leaving." ;
+   }
+   {
+      hallway.welcome.speak = "ok" ;
+   };
+
+   hallway.door.delayed : { hallway.door.open = "on" ; }{ hallway.door.open = "off" ; } ;
+   livingroom.window.delayed : { livingroom.window.open = "on" ; }{ livingroom.window.open = "off" ; } ;
+   office.window.delayed : { office.window.open = "on" ; }{ office.window.open = "off" ; } ;
+  
+   mapp == "on" :
+   { 
+      global.someOneIsIn = true ;
+   }
+   mapp == "off" :
+   {
+      global.someOneIsIn = false ;
+   };
+
+   global.someOneIsIn : { 
+
+      apartment.in = "on" ;
+
+   }
+   {
+      apartment.in = "off" ;
+   } ;
+
+   return global.someOneIsIn ;
+ 
+}
+/*
+ * ------------------------------------------------+
+ *  Output messages with timestamp                 |
+ * ------------------------------------------------+
+ *
+ */
+rosiSays( message ){
+  t = System.time();
+  System.out.println(t," Rosi says : ",message);
+}
+/*
+ * ------------------------------------------------+
+ *  Place Holders to be overwritten by modules     |
+ * ------------------------------------------------+
+ *
+ */
+doWork(){
+  rosiSays("'doWork' placeholder called!");
+}
+allLightsSwitch( stat ){
+  livingroom.light.01.state   =  stat ;
+  livingroom.light.02.state   =  stat ;
+  livingroom.light.03.state   =  stat ;
+  bathroom.light.01.state     =  stat ;
+  bathroom.light.02.state     =  stat ;
+  kitchen.light.01.state      =  stat ;
+  kitchen.light.02.state      =  stat ;
+  hallway.light.01.state      =  stat ;
+  hallway.light.02.state      =  stat ;
+  diningroom.light.01.state   =  stat ;
+  office.light.01.state       =  stat ;
+  balcony.light.01.state      =  stat ;
+    balcony.light.beamer    = stat ;
+    balcony.light.fence     = stat ;
+    balcony.light.xMasChain = stat ;
+    balcony.light.tree      = stat ;
+
+}
+handleUPS(){
+  rosiSays("'handleUPS' placeholder called!");
+}
+updateTimePatches(){
+  rosiSays("'updateTimePatches' placeholder called!");
+}
+
+remoteControlOverwrite(){
+  rosiSays("'remoteControlOverwrite' placeholder called!");
+}
+checkEmergency(){
+  rosiSays("'checkEmergency' placeholder called!" );
+}
+initializeAutoVacation(){
+  rosiSays("'initializeAutoVacation' placeholder called!" );
+}
+handleLeds01(){
+  rosiSays("'handleLeds01' placeholder called!" );
+}

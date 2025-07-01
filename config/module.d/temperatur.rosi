@@ -1,0 +1,83 @@
+/*
+ * ---------------------------------------------+
+ *  The temperature modules.                     |
+ *  doNormalTemperature : some one is in,        |
+ *  setTemperatureLow : no one is in             |
+ * ---------------------------------------------+
+ */
+makeItWarm(){
+
+     livingroom.heater.temperature.desired = livingroom.temperature.nice  ;
+     bathroom.heater.temperature.desired   = bathroom.temperature.nice ;
+     office.heater.temperature.desired     = office.temperature.nice ;
+     livingroom.light.01.state = "on";
+
+}
+/*
+ *  THIS IS CALLED IF NO ONE IS IN.
+ *  ------------------------------
+ */
+setTemperatureLow(){
+   livingroom.heater.temperature.desired = livingroom.temperature.low ;
+   bathroom.heater.temperature.desired   = bathroom.temperature.low ;
+   office.heater.temperature.desired     = office.temperature.low ;
+   livingroom.light.01.state = "off";
+     livingroom.leds.01.red   = 0.0 ;
+     livingroom.leds.01.blue  = 0.0 ;
+     livingroom.leds.01.green = 0.0 ;
+}
+/*
+ * THIS IS ONLY CALLED IF SOMEONE IS 'in'.
+ *  ------------------------------
+ */
+doNormalTemperature(){
+
+  setTemperatureLow();
+
+
+  remote01.long.event :
+  {
+     global.office.temperature.on :
+     {
+        global.office.temperature.on = false ;
+     } 
+     {
+        global.office.temperature.on = true ;
+     };
+  };
+
+  global.office.temperature.on :
+  {
+     office.heater.temperature.desired = office.temperature.nice;
+  };
+     
+
+  livingroom.window == "closed" :
+  /* ---------------------------------------------------------- */
+  {
+     livingroom.heater.temperature.desired = livingroom.temperature.nice  ;
+     livingroom.light.01.state = "on";
+  } 
+  {
+     livingroom.heater.temperature.desired = livingroom.temperature.low ;
+  };
+  tp.bathroom.warm | ( remoteL2.state == "on" ) :
+  {
+     bathroom.heater.temperature.desired = bathroom.temperature.nice ;
+  };
+   remoteL2.state == "off" :
+   { 
+     bathroom.heater.temperature.desired = bathroom.temperature.low  ;
+   };
+  remoteL1.state == "on" :
+  {
+     makeItWarm();
+  };
+  remoteL1.state == "off" :
+  {
+     setTemperatureLow() ;
+  };
+  /*
+   * if remoteL1.state == "automatic" we do as defined above
+   */
+}

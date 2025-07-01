@@ -1,0 +1,16 @@
+checkEmergency(){
+
+   global.someOneIsIn == false :
+   {
+       livingroom.window == "open" : { unexpected.event = "Window in livingroom is open" ; };
+       office.window     == "open" : { unexpected.event = "Window in office is open" ; };
+
+       livingroom.motion.delayed  : { unexpected.event = "Motion in livingroom" ; };
+       bathroom.motion.delayed    : { unexpected.event = "Motion in bathroom" ; };
+       hallway.motion.delayed     : { unexpected.event = "Motion in hallway" ; };
+   }
+   {
+       unexpected.event = "none" ;
+   } ;
+
+}

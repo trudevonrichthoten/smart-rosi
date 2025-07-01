@@ -1,0 +1,42 @@
+/*
+ *
+ * -----------------------------------
+ * Overwrite from Remote Control.    |
+ * -----------------------------------
+ */
+remoteControlOverwrite(){
+/*
+   remoteL2.state == "on"  : { kitchen.light.01.state = "on" ; kitchen.light.02.state = "on" ; } ;
+   remoteL2.state == "off" : { kitchen.light.01.state = "off" ; kitchen.light.02.state = "off" ; } ;
+*/
+
+   remoteL3.state == "on" :
+   {
+      livingroom.light.01.state   =  "on" ;
+      livingroom.light.02.state   =  "on" ;
+      livingroom.light.03.state   =  "on" ;
+      bathroom.light.01.state     =  "on" ;
+      bathroom.light.02.state     =  "on" ;
+      kitchen.light.01.state      =  "on" ;
+      kitchen.light.02.state      =  "on" ;
+      hallway.light.01.state      =  "on" ;
+      diningroom.light.01.state   =  "on" ;
+      office.light.01.state       =  "on" ;
+      balcony.light.01.state      =  "on" ;
+   }
+   remoteL3.state == "off" :
+   {
+      livingroom.light.01.state   =  "off" ;
+      livingroom.light.02.state   =  "off" ;
+      livingroom.light.03.state   =  "off" ;
+      bathroom.light.01.state     =  "off" ;
+      bathroom.light.02.state     =  "off" ;
+      kitchen.light.01.state      =  "off" ;
+      kitchen.light.02.state      =  "off" ;
+      hallway.light.01.state      =  "off" ;
+      diningroom.light.01.state   =  "off" ;
+      office.light.01.state       =  "off" ;
+      balcony.light.01.state      =  "off" ;
+   } ;
+}
+

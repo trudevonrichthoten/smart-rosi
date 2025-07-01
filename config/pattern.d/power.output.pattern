@@ -1,0 +1,2 @@
+"storage.power:(.*)" "power.level2" "${1}" "hallo"
+"power.level1:(.*)"  "power.level1" "${1}"

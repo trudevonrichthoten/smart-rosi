@@ -1,0 +1,3 @@
+"(unexpected.event):(.*)"    "${1}" "${2}"
+"(hallway.door.open):on"     "${1}" "opened"
+"power.main:(.*)"   "MainPower" "${1}"

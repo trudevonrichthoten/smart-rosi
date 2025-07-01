@@ -1,0 +1,81 @@
+handleLeds01(){
+
+   rosiSays("'handleLeds01' called!" );
+
+   remote03.long.event | hallway.door.event :
+   {
+      hallway.camera.01 = hallway.camera.01 +  1 ;
+   };
+   remote04.long.event : 
+   {
+      global.livingroom.leds : 
+         {  global.livingroom.leds = false ; } 
+         {  global.livingroom.leds = true  ; }  ;
+
+   };
+   remote05.long.event : 
+   {
+       global.balcony.light == 0 : 
+       {  
+           global.balcony.light = 1 ; 
+       } 
+       global.balcony.light == 1 : 
+       { 
+            global.balcony.light = 2 ;
+       } 
+       {
+            global.balcony.light = 0 ;
+       }; 
+
+   };
+/*
+   global.livingroom.leds : 
+     {
+*/
+        r = ( livingroom.heater.temperature.messured - 17.0 ) / 10.0 ;
+        r = r * 4000.0 ;
+        livingroom.leds.01.red  = r ; 
+        livingroom.leds.01.blue  = 4000.0 - r ; 
+        livingroom.leds.01.green = 0.0  ; 
+/*
+        livingroom.leds.01.blue  = 0.0 ; 
+        livingroom.leds.01.red   = 0.0 ; 
+        livingroom.leds.01.green = 0.0  ; 
+     }
+     {
+        livingroom.leds.01.blue  = 0.0 ;
+        livingroom.leds.01.green = 0.0 ;
+        livingroom.leds.01.red   = 0.0 ;
+     } ;
+*/
+     remoteL1.state == "off" :
+     { 
+        livingroom.leds.01.blue  = 0.0 ; 
+        livingroom.leds.01.red   = 0.0 ; 
+        livingroom.leds.01.green = 0.0  ; 
+     };
+
+
+     global.balcony.light == 0 :
+     {
+       balcony.light.beamer     =  "off" ;
+       balcony.light.tree       =  "off" ;
+       balcony.light.xMasChain  =  "off" ;
+       balcony.light.fence      =  "off" ;
+     }
+     global.balcony.light == 1 :
+     {
+       balcony.light.beamer     =  "off" ;
+       balcony.light.tree       =  "on" ;
+       balcony.light.xMasChain  =  "on" ;
+       balcony.light.fence      =  "on" ;
+     }
+     {
+       balcony.light.beamer     =  "on" ;
+       balcony.light.tree       =  "on" ;
+       balcony.light.xMasChain  =  "on" ;
+       balcony.light.fence      =  "on" ;
+     };
+
+
+}

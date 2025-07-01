@@ -1,0 +1,8 @@
+"099950505156.temperature.celsius:(.*)"  "livingroom.heater.temperature" "${1}"
+"099950505156.hkr.batterylow:(.*)"       "livingroom.heater.battery" "${1}"
+"24:65:11:C2:85:BB:(.*)" "livingroom.lamp${1}" "${1}"
+"24:65:11:C4:A7:ED:(.*)" "diningroom.lamp${1}" "${1}"
+"087610159767:(.*)"      "hallway.xmastree${1}" "${1}"
+"087610205141:(.*)"      "hallway.light${1}" "${1}"
+"087610168545:(.*)"      "rosi.master${1}" "${1}"
+"087610259390:(.*)"      "saloon.light" "${1}"

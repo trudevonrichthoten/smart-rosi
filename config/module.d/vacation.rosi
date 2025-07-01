@@ -1,0 +1,27 @@
+initializeAutoVacation(){
+
+   global.autoVacationMode.now = System.now() ;
+
+   hallway.button.01.long.event & ( global.autoVacationMode.state == "off" ) :
+   {
+      global.autoVacationMode.state = "preparing" ;
+      global.autoVacationMode.timer = System.now() + global.autoVacationMode.delay ;
+      hallway.welcome.speak = "Preparing Vacation Mode";
+   }
+   ( global.autoVacationMode.state == "preparing" ) & ( global.autoVacationMode.timer < System.now() ) :
+   {
+      global.autoVacationMode.state = "on" ; 
+      global.autoVacationMode.timer = 0 ;
+      hallway.welcome.speak = "Vacation Mode enabled";
+      someOneLeft();
+   };
+
+    hallway.button.02.long.event  :
+   {
+      global.autoVacationMode.state = "off" ; 
+      global.autoVacationMode.timer = 0 ;
+      hallway.welcome.speak = "Vacation Mode disabled";
+   };
+
+
+}

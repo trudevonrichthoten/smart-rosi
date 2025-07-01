@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------+
+ *  Define the various time patches                |  
+ * ------------------------------------------------+
+ */
+updateTimePatches(){
+
+   tp.blueHour = [20:00-21:00] 
+               ON
+               Monday,Tuesday,Wednesday,Thursday,Friday,
+               Saturday,Sunday ;
+
+   tp.workday.morning = [05:00-07:00] 
+                  ON
+                  Monday,Tuesday,Wednesday,Thursday,Friday;
+
+   tp.dayoff.morning = [07:00-08:00] 
+                  ON
+                  Saturday,Sunday ;
+
+   tp.wakemeup = [06:30-07:00]
+                  ON
+                  Monday,Tuesday,Wednesday,Thursday,Friday;
+
+   tp.bathroom.warm = [07:30-09:00]
+                  ON
+                  Monday,Tuesday,Wednesday,Thursday,Friday;
+
+   tp.evenings = [13:00-23:00] 
+                 ON
+                 Monday,Tuesday,Wednesday,Thursday,Friday,
+                 Saturday,Sunday ;
+
+   tp.nightFirst = [17:00-23:59] 
+                 ON
+                 Monday,Tuesday,Wednesday,Thursday,Friday,
+                 Saturday,Sunday ;
+
+
+}

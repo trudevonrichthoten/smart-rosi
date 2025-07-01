@@ -1,0 +1,6 @@
+"(battery.voltage):(.*)" "aeg.${1}" "${2}"
+"(battery.charge):(.*)" "aeg.${1}" "${2}"
+"(ups.status):(OB)" "aeg.${1}" "battery"
+"(ups.status):(OL)" "aeg.${1}" "net"
+"(ups.temperature):(.*)" "aeg.${1}" "${2}"
+

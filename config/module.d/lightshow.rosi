@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------+
+ *     do things when noone is in the appartement. |
+ * ------------------------------------------------+
+ *
+ */
+doTheFakedLightShow(){
+    
+    fakeLightTime = tp.workday.morning | tp.dayoff.morning | tp.evenings  ;
+  
+    someLightIsOn = false ;
+
+    allLightsSwitch("off");
+    
+    fakeLightTime & ( livingroom.brightness < 80 ) :
+    /* ------------------------------------------ */
+    {
+       random.01.long :
+      /* ------------ */
+       {
+         livingroom.light.01.state = "on" ;
+         diningroom.light.01.state = "on" ;
+         bathroom.light.01.state   = "on" ;
+         office.light.01.state     = "on" ;
+         someLightIsOn             = true ;
+       };
+
+       random.01.short :
+      /* ------------ */
+       {
+         livingroom.light.02.state = "on" ;
+         livingroom.light.03.state = "on" ;
+         someLightIsOn       = true ;
+       };
+
+       someLightIsOn  == false : 
+       {  
+          livingroom.light.01.state = "on" ;
+       };
+    };
+
+}
+

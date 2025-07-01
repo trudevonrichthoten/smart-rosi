@@ -1,0 +1,4 @@
+"livingroom.light.(0[12]).state"   "livingroom.switch.${1}" "dummy"
+"bathroom.light.(0[12]).state"     "bathroom.switch.${1}" "dummy"
+"hallway.light.(0[12]).state"      "hallway.switch.${1}" "dummy"
+"kitchen.light.(0[12]).state"      "kitchen.switch.${1}"
