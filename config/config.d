@@ -1,1 +1,0 @@
-/rosi-readwrite/config.d
